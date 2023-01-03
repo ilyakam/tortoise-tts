@@ -1,9 +1,13 @@
 import torch
 import torchaudio
 
+from api import TextToSpeech
+
 # Init is ran on server startup
 # Load your model to GPU as a global variable here using the variable name "model"
 def init():
+    print('Running `init()` in `app.py`')
+    
     global model
     
     model = TextToSpeech()
@@ -11,6 +15,8 @@ def init():
 # Inference is ran for every server call
 # Reference your preloaded global model variable here.
 def inference(model_inputs:dict) -> dict:
+    print(f'Running `inference()` in `app.py` with a dict of {model_inputs}')
+
     global model
 
     # TODO: replace with `voice = model_inputs.get('voice', None)`, etc.

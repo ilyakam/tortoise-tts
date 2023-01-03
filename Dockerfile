@@ -5,6 +5,13 @@ FROM ilyakam/tts_w_deps:001
 WORKDIR /
 ADD . .
 
+# Overwrite `app.py` because the `ilyakam/tts_w_deps:001` image cotains
+# a buggy version of that file and the previous command doesn't seem to
+# overwrite it on its own. (I forgot to `from api import TextToSpeech`.)
+COPY app.py .
+
+ENV PYTHONPATH="${PYTHONPATH}:/"
+
 RUN pip install -r requirements.txt
 
 # Commented out `setup.py` (`##`) with the hopes that it's not needed.
