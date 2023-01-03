@@ -31,4 +31,4 @@ def inference(model_inputs:dict) -> dict:
     torchaudio.save('generated.wav', gen.squeeze(0).cpu(), 24000)
 
     # Output
-    return {'message': "Successfully created generated.wav. Now go get it!"}
+    return {"message": "Successfully created generated.wav. Now go get it!"}
