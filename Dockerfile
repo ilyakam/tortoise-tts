@@ -1,25 +1,11 @@
 # Must use a Cuda version 11+
-FROM ilyakam/tts_w_deps:001
+FROM ilyakam/deps-for-tts:002
 
 # Set up a working directory and copy everything over
 WORKDIR /
 ADD . .
 
-# Overwrite `app.py` because the `ilyakam/tts_w_deps:001` image cotains
-# a buggy version of that file and the previous command doesn't seem to
-# overwrite it on its own. (I forgot to `from api import TextToSpeech`.)
-COPY app.py .
-
 ENV PYTHONPATH="${PYTHONPATH}:/"
-
-RUN pip install -r requirements.txt
-
-# Commented out `setup.py` (`##`) with the hopes that it's not needed.
-# It's pointing to the tortoise/tortoise_tts.py script and there are
-# a couple of `recursive-include`-s in the `MANIFEST.in`. The majority
-# of these requirements are already met in the image itself. The sole,
-# remaining requirement is `sanic` and it's installed in the prior step.
-## RUN python3 setup.py install
 
 # Commented out the three lines below (`##`) because the models were
 # already downloaded and stored on the image itself. Surprisingly, it
@@ -30,11 +16,6 @@ RUN pip install -r requirements.txt
 ## Add your model weight files 
 ## (in this case we have a python script)
 ## RUN python3 download.py
-
-# Commented out the two lines below (`##`) because `ADD . .` should
-# have taken care of it by this point
-## Add your custom app code, init() and inference()
-## ADD app.py .
 
 EXPOSE 8000
 
