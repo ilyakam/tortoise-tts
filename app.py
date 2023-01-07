@@ -23,9 +23,9 @@ def inference(model_inputs:dict) -> dict:
 
     global model
 
-    preset = model_inputs.get(preset, 'fast')
-    text = model_inputs.get(text, '[annoyed] no text provided')
-    voice = model_inputs.get(voice, 'tom')
+    preset = model_inputs.get('preset', 'fast')
+    text = model_inputs.get('text', '[annoyed] no text provided')
+    voice = model_inputs.get('voice', 'tom')
 
     # Prepare the model
     voice_samples, conditioning_latents = load_voice(voice)
