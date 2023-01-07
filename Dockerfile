@@ -1,5 +1,5 @@
 # Must use a Cuda version 11+
-FROM ilyakam/deps-for-tts:002
+FROM ilyakam/deps-for-tts:003
 
 # Set up a working directory and copy everything over
 WORKDIR /

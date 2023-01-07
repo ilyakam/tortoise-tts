@@ -3,9 +3,14 @@
 
 # Instead, edit the init() and inference() functions in app.py
 
-from sanic import Sanic, response
 import subprocess
-import tortoise.api as user_src
+import app as user_src
+
+from sanic import Sanic, response
+from sanic.worker.manager import WorkerManager
+
+# Increase the Sanic worker ACK timeout from 30 seconds to five minutes
+WorkerManager.THRESHOLD = 5 * 60 * 10
 
 # We do the model load-to-GPU step on server startup
 # so the model object is available globally for reuse
@@ -39,4 +44,4 @@ def inference(request):
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8000, workers=1)
+    server.run(host='0.0.0.0', port=8000, single_process=True)
