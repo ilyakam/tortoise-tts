@@ -10,6 +10,44 @@ This repo contains all the code needed to run Tortoise TTS in inference mode.
 A (*very*) rough draft of the Tortoise paper is now available in doc format. I would definitely appreciate any comments, suggestions or reviews:
 https://docs.google.com/document/d/13O_eyY65i6AkNrN_LdPhpUjGhyTNKYHvDrIvHnHe1GA
 
+### Serverless Framework
+
+This repo wraps Tortoise in a Serverless Framework that's borrowed from [Banana](https://docs.banana.dev/banana-docs/core-concepts/inference-server/serverless-framework).
+
+#### Quick Start Guide
+
+1. Build the container:
+
+    ```sh
+    docker build . -t tortoise-tts
+    ```
+
+1. Run the container with GPU support and expose port 8000:
+
+    ```sh
+    docker run --gpus=all -p 8000:8000 -it tortoise-tts
+    ```
+
+1. Call it to convert text to speech:
+
+    ```sh
+    curl --request POST \
+        --url http://[SOME-LOCAL-URL]:8000/ \
+        --header 'Content-Type: application/json' \
+        --data '{
+            "text": "[Relieved] First proper attempt on a local machine."
+        }'
+    ```
+
+1. Copy/paste the resulting base64 string to play it back:
+
+    ```html
+    <!doctype html>
+    <html>
+      <audio controls autoplay src="data:audio/wav;base64,[BASE+64+STRING+GOES+HERE]"></audio>
+    </html>
+    ```
+
 ### Version history
 
 #### v2.4; 2022/5/17
